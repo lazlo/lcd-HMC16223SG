@@ -2,8 +2,10 @@
 
 int main(void)
 {
-	while (1) {
-		lcd_init();
-	}
+	lcd_init();
+	lcd_init();
+	lcd_puts("Hello!");
+	while (1)
+		;
 	return 0;
 }

@@ -55,6 +55,7 @@ static void lcd_io_mode_set(const uint8_t rs, const uint8_t rw)
 
 #define LCD_IO_MODE_WRITE_INSTRUCTION()	lcd_io_mode_set(RS_INSTR, RW_WRITE)	/* 0,0 */
 #define LCD_IO_MODE_READ_INSTRUCTION()	lcd_io_mode_set(RS_INSTR, RW_READ)	/* 0,1 */
+#define LCD_IO_MODE_WRITE_DATA()	lcd_io_mode_set(RS_DATA, RW_WRITE)	/* 1,0 */
 
 static int lcd_is_busy(void)
 {
@@ -80,6 +81,31 @@ static void lcd_funcset(const uint8_t dtlen, const uint8_t lines, const uint8_t 
 	LCD_EN_PORT_REG &= ~(1 << LCD_EN_PIN);
 }
 
+static void lcd_ctrl(const uint8_t disp_on, const uint8_t curs_on, const uint8_t blink_on)
+{
+	uint8_t instr = (1 << 3); /* 0x08 */
+	if (disp_on)	instr |= (1 << 2);
+	if (curs_on)	instr |= (1 << 1);
+	if (blink_on)	instr |= (1 << 0);
+	LCD_IO_MODE_WRITE_INSTRUCTION();
+	lcd_io_write(instr);
+
+	LCD_EN_PORT_REG |= (1 << LCD_EN_PIN);
+	_delay_us(39);
+	LCD_EN_PORT_REG &= ~(1 << LCD_EN_PIN);
+}
+
+static void lcd_clear(void)
+{
+	uint8_t instr = (1 << 0); /* 0x01 */
+	LCD_IO_MODE_WRITE_INSTRUCTION();
+	lcd_io_write(instr);
+
+	LCD_EN_PORT_REG |= (1 << LCD_EN_PIN);
+	_delay_us(1530);
+	LCD_EN_PORT_REG &= ~(1 << LCD_EN_PIN);
+}
+
 void lcd_init(void)
 {
 	lcd_init_pins();
@@ -90,4 +116,25 @@ void lcd_init(void)
 	 * Display line numbers = 2
 	 * Display font type = 5 x 10 dots */
 	lcd_funcset(1, 1, 1);
+
+	/* Send Display ON/OFF Control instruction
+	 * Set
+	 * display = ON
+	 * cursor = ON
+	 * cursor blink = ON
+	 */
+	lcd_ctrl(1, 1, 1);
+
+	/* Send Clear Display instruction */
+	//lcd_clear();
+}
+
+void lcd_puts(const char *s)
+{
+	LCD_IO_MODE_WRITE_DATA();
+	lcd_io_write(s[0]);
+
+	LCD_EN_PORT_REG |= (1 << LCD_EN_PIN);
+	_delay_us(43);
+	LCD_EN_PORT_REG &= ~(1 << LCD_EN_PIN);
 }

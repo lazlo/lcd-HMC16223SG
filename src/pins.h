@@ -1,0 +1,47 @@
+#pragma once
+
+#include <avr/io.h>
+
+#define LCD_RS_PIN	5
+#define LCD_RS_DDR_REG	DDRD
+#define LCD_RS_PORT_REG	PORTD
+#define LCD_RW_PIN	6
+#define LCD_RW_DDR_REG	DDRD
+#define LCD_RW_PORT_REG	PORTD
+#define LCD_EN_PIN	7
+#define LCD_EN_DDR_REG	DDRD
+#define LCD_EN_PORT_REG	PORTD
+
+#define LCD_D7_PIN	3
+#define LCD_D7_DDR_REG	DDRC
+#define LCD_D7_PORT_REG	PORTC
+#define LCD_D7_PIN_REG	PINC
+#define LCD_D6_PIN	2
+#define LCD_D6_DDR_REG	DDRC
+#define LCD_D6_PORT_REG	PORTC
+#define LCD_D6_PIN_REG	PINC
+#define LCD_D5_PIN	1
+#define LCD_D5_DDR_REG	DDRC
+#define LCD_D5_PORT_REG	PORTC
+#define LCD_D5_PIN_REG	PINC
+#define LCD_D4_PIN	0
+#define LCD_D4_DDR_REG	DDRC
+#define LCD_D4_PORT_REG	PORTC
+#define LCD_D4_PIN_REG	PINC
+
+#define LCD_D3_PIN	3
+#define LCD_D3_DDR_REG	DDRB
+#define LCD_D3_PORT_REG	PORTB
+#define LCD_D3_PIN_REG	PINB
+#define LCD_D2_PIN	2
+#define LCD_D2_DDR_REG	DDRB
+#define LCD_D2_PORT_REG	PORTB
+#define LCD_D2_PIN_REG	PINB
+#define LCD_D1_PIN	1
+#define LCD_D1_DDR_REG	DDRB
+#define LCD_D1_PORT_REG	PORTB
+#define LCD_D1_PIN_REG	PINB
+#define LCD_D0_PIN	0
+#define LCD_D0_DDR_REG	DDRB
+#define LCD_D0_PORT_REG	PORTB
+#define LCD_D0_PIN_REG	PINB

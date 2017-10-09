@@ -129,8 +129,8 @@ void lcd_init(void)
 	/* Set
 	 * Interface data length = 8
 	 * Display line numbers = 2
-	 * Display font type = 5 x 10 dots */
-	lcd_funcset(1, 1, 1);
+	 * Display font type = 5 x 7 dots */
+	lcd_funcset(1, 1, 0);
 
 	/* Send Display ON/OFF Control instruction
 	 * Set

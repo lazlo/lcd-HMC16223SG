@@ -67,12 +67,21 @@ static int lcd_is_busy(void)
 	return busy;
 }
 
+static void lcd_busy_wait(void)
+{
+	while (lcd_is_busy())
+		;
+}
+
 static void lcd_funcset(const uint8_t dtlen, const uint8_t lines, const uint8_t font)
 {
 	uint8_t instr = (1 << 5); /* 0x20 */
 	if (dtlen)	instr |= (1 << 4);
 	if (lines)	instr |= (1 << 3);
 	if (font)	instr |= (1 << 2);
+
+	lcd_busy_wait();
+
 	LCD_IO_MODE_WRITE_INSTRUCTION();
 	lcd_io_write(instr);
 
@@ -87,6 +96,9 @@ static void lcd_ctrl(const uint8_t disp_on, const uint8_t curs_on, const uint8_t
 	if (disp_on)	instr |= (1 << 2);
 	if (curs_on)	instr |= (1 << 1);
 	if (blink_on)	instr |= (1 << 0);
+
+	lcd_busy_wait();
+
 	LCD_IO_MODE_WRITE_INSTRUCTION();
 	lcd_io_write(instr);
 
@@ -98,6 +110,9 @@ static void lcd_ctrl(const uint8_t disp_on, const uint8_t curs_on, const uint8_t
 static void lcd_clear(void)
 {
 	uint8_t instr = (1 << 0); /* 0x01 */
+
+	lcd_busy_wait();
+
 	LCD_IO_MODE_WRITE_INSTRUCTION();
 	lcd_io_write(instr);
 

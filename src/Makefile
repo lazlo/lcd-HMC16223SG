@@ -64,6 +64,7 @@ TARGET = firmware
 
 # List C source files here. (C dependencies are automatically generated.)
 SRC = $(TARGET).c
+SRC += uart.c
 SRC += lcd.c
 
 # List Assembler source files here.
